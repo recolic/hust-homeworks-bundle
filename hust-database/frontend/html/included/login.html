@@ -1,0 +1,55 @@
+<script>
+
+function doLogin() {
+    let name = document.getElementById("username").value;
+    let pswd = document.getElementById("password").value;
+    pswd = sha256("rsalt" + pswd + "rsalt")
+    let tokenText = httpGetSync("/api/Login?name={0}&password={1}".format(name, pswd));
+    if(tokenText.startsWith("token=")) {
+        // for (var it in $.cookie()) $.removeCookie(it);
+        // document.cookie = tokenText.replace("token=", "");
+        // document.cookie = "name=" + name;
+        setCookie("name", name, 365);
+        window.location.href = "/me.html";
+    }
+    else {
+        alert("Permission denied. " + tokenText);
+    }
+}
+function forgetPassword() {
+    let email = prompt("Your security email:", "");
+    if(email != null) {
+        var host = window.location.hostname + (location.port ? ':'+location.port: '');
+
+        let resp = httpGetSync("/api/ForgetPassword?email={0}&domain={1}&proto={2}".format(email, host, location.protocol));
+        if(resp == "status=ok") {
+            alert("Email sent. Check your mailbox!");
+        }
+        else {
+            alert("Failed: " + resp);
+        }
+    }
+}
+</script>
+
+<section class="section">
+    <div class="container">
+        <form action="/me.html">
+            <div class="field">
+                <label class="label" for="username">Username</label>
+                <input class="input" type="text" id="username">
+            </div>
+            <div class="field">
+                <label class="label" for="password">Password</label>
+                <input class="input" type="password" id="password">
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button type="submit" class="button is-success" onclick="doLogin();">Login</button>
+                    <button type="reset" class="button" onclick="forgetPassword();">Forget Username / Password</button>
+                </p>
+            </div>
+        </form>
+    </div>
+</section>
+

@@ -1,0 +1,6 @@
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 10000,5000
+set output '.tmp.png'
+set xrange [-180:180]
+set yrange [-90:90]
+plot '.tmp.txt' with dot
+

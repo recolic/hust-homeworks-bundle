@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage[a4paper, margin=0.2in]{geometry}
+\usepackage{CJKutf8}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{physics}
+\usepackage{xcolor}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+\title{hw1}
+\author{刘本嵩 U201614531}
+
+\maketitle
+
+% \foreignlanguage{greek}{φΔδ} \begin{CJK}{UTF8}{gbsn}汉\end{CJK}
+
+\section{Q1.7}
+\Large
+\smallskip
+
+$$ CPI = \frac{\sum{CycleCount}}{\sum{InstrCount}} = \frac{45k+150k+32k+3k}{45k+75k+8k+1.5k} = 1.776 $$
+
+$$ MIPS = \frac{CyclePerSecond}{CPI * 1Million} = \frac{400M}{1.776 * 1M} = 225.217 $$
+
+$$ ExecutionTime = \frac{\sum{InstrCount}}{MIPS * 1Million} = \frac{45k+75k+8k+1.5k}{225.217 * 1M} = 0.575ms $$
+
+\section{Q1.10}
+\Large
+\smallskip
+
+(1) Obviously, $ 10 = \frac{t}{0.3t/30 + 0.3t/20 + Factor \dot t / 10 + (0.4-Factor)t} $ , gives $ Factor = 0.361 = 36.111\% $.
+
+(2) Obviously, $$ Result = \frac{0.2t}{0.3t/30 + 0.3t/20 + 0.2t / 10 + 0.2t} = 0.816 = 81.632\% $$ , where t is the original execution time.
+
+\section{Q1.11}
+\Large
+\smallskip
+
+In PlanA, $ CPI* = 1.25*0.7 + \textcolor{red}{3}*0.04 + 5*0.26 = 2.295 $
+\\
+In PlanB, $ CPI* = 1.25*0.7 + 20*0.04 + \textcolor{red}{3}*0.26 = 2.455 $
+
+因此，方案1更好.
+
+\end{CJK}
+\end{document}
+

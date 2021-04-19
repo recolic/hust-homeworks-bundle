@@ -1,0 +1,56 @@
+Performance test(ignore) for add
+----------------------------
+(without saving json)
+
+1K test:
+0.05user 0.00system 0:00.05elapsed 98%CPU (0avgtext+0avgdata 5916maxresident)k
+0inputs+0outputs (0major+731minor)pagefaults 0swaps
+
+10K test:
+0.53user 0.08system 0:00.62elapsed 99%CPU (0avgtext+0avgdata 27756maxresident)k
+0inputs+0outputs (0major+6271minor)pagefaults 0swaps
+
+100K test:
+5.62user 0.98system 0:06.65elapsed 99%CPU (0avgtext+0avgdata 249736maxresident)k
+0inputs+0outputs (0major+61925minor)pagefaults 0swaps
+
+1M test:
+61.65user 9.54system 1:11.41elapsed 99%CPU (0avgtext+0avgdata 2470252maxresident)k
+104inputs+0outputs (1major+620327minor)pagefaults 0swaps
+
+App naive test: (show that I'm right)
+-------------------------
+show naive.rfakesh
+show naive.json
+run bin/hust-ds < naive.rfakesh
+
+App add/rm/get test:
+-----------------------------
+show T-100ktest.json
+show T-10ktest.json
+show 1mtest.json
+
+App test:
+-----------------------------
+load T-100ktest.json
+indirect friend 1
+(
+1 have friend 24724 67914 83663
+
+Person 24724 
+Friends: 37332 82062 89565 97152
+Person 67914
+Friends: 696 5717 18178 27708 38184 56586 57932 64183 77364 83745 
+Person 83663
+Friends: 1479 16615 25173 33595 36756 45544 58074 66831 70693 77881 83581 89472 
+
+indirect friend 1
+ANSWER: 89472 83581 70693 66831 58074 36756 5717 18178 696 45544 77364 33595 37332 1479 77881 82062 83745 27708 38184 25173 56586 97152 57932 89565 64183 16615 
+
+rfaketerm 0.3.1 ~ rm friend 1 83663
+1 -/> 83663
+rfaketerm 0.3.1 ~ indirect friend 1
+64183 57932 56586 38184 27708 83745 82062 37332 89565 77364 97152 696 18178 5717 
+
+)
+no common found... skip

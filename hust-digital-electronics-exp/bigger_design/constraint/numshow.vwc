@@ -1,0 +1,59 @@
+vwc_port E3 clk
+vwc_clk clk
+
+vwc_port U9 num[0]
+vwc_port U8 num[1]
+vwc_port R7 num[2]
+vwc_port R6 num[3]
+vwc_port R5 num[4]
+vwc_port V7 num[5]
+vwc_port V6 num[6]
+vwc_port V5 num[7]
+vwc_port U4 num[8]
+vwc_port V2 num[9]
+vwc_port U2 num[10]
+vwc_port T3 num[11]
+vwc_port T1 num[12]
+vwc_port R3 num[13]
+vwc_port P3 num[14]
+vwc_port P4 num[15]
+ 
+
+
+
+
+
+vwc_port L3 phyPad[0]
+
+vwc_port N1 phyPad[1]
+
+vwc_port L5 phyPad[2]
+
+vwc_port L4 phyPad[3]
+
+vwc_port K3 phyPad[4]
+
+vwc_port M2 phyPad[5]
+
+vwc_port L6 phyPad[6]
+
+
+vwc_port M4 phyPad[7]
+
+
+vwc_port N6 an[0]
+
+vwc_port M6 an[1]
+
+vwc_port M3 an[2]
+
+vwc_port N5 an[3]
+
+vwc_port N2 an[4]
+
+vwc_port N4 an[5]
+
+vwc_port L1 an[6]
+
+vwc_port M1 an[7]
+

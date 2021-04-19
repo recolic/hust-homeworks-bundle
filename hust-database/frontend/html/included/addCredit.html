@@ -1,0 +1,35 @@
+<script>
+function credit() {
+    let name = document.getElementById("inputName").value;
+    let credit = document.getElementById("inputCredit").value;
+    if(name == "" || credit == "") {
+        return;
+    }
+    let res = httpGetSync("/api/UpdateUserBalance?delta={0}&name={1}".format(credit, name));
+    if(res == "status=ok") {
+        alert("Done.");
+    }
+    else {
+        alert("Failed: " + res);
+    }
+}
+</script>
+
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Add credit to customer</h1>
+        <div class="field">
+            <label class="label">Username</label>
+            <input class="input" type="text" id="inputName">
+        </div>
+        <div class="field">
+            <label class="label">Credit</label>
+            <input class="input" type="number" step="0.01" id="inputCredit">
+        </div>
+ 
+        <br />
+        <button type="submit" class="button is-primary" onclick="credit();">Add Credit</button>
+    </div>
+</section>
+

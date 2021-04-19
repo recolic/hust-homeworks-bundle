@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TMobile</title>
+
+        <link href="res/bulma.min.css" rel="stylesheet">
+        <script src="res/jquery.min.js"></script> 
+        <script src="render.js"></script> 
+        <script> 
+        let _ar = location.pathname.split('/');
+        let webFileName = _ar[_ar.length - 1];
+
+        $(function(){
+          $("#includedContent").load("included/" + webFileName); 
+        });
+       </script> 
+    </head>
+    <body>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://www.t-mobile.com/">TMobile</a>
+            </div>
+            <div class="navbar-menu is-active">
+                <div class="navbar-start" id="topbar-contents">
+                </div>
+                <div class="navbar-end" id="topbar-right-contents">
+                </div>
+            </div>
+        </nav>
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="res/sheet/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/css/util.css">
+	<link rel="stylesheet" type="text/css" href="res/sheet/css/main.css">
+</head>
+<script src="/res/sha256.min.js"></script>
+
+<div id="includedContent"></div>
+<script>
+renderTabs();
+</script>
+
+	<script src="res/sheet/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="res/sheet/vendor/bootstrap/js/popper.js"></script>
+	<script src="res/sheet/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="res/sheet/vendor/select2/select2.min.js"></script>
+	<script src="res/sheet/js/main.js"></script>
+
+
+
+    </body>
+</html>

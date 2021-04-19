@@ -1,0 +1,45 @@
+<script>
+function doLoad() {
+    let u = httpGetSync('/api/QueryUserInfo?name=' + getCookie("name"));
+    if(!u.startsWith('name=')) {
+        alert("Unable to fetch userinfo: " + u);
+        return;
+    }
+    let name  = u.split("&")[0].split("=")[1];
+    let perms = u.split("&")[1].split("=")[1];
+    let balan = u.split("&")[2].split("=")[1];
+    let achie = u.split("&")[3].split("=")[1];
+    let plan  = u.split("&")[4].split("=")[1];
+    let price = u.split("&")[5].split("=")[1];
+
+    document.getElementById("name-h").innerText = "Name: " + name;
+    document.getElementById("perm-h").innerText = "Permissions: " + perms;
+    document.getElementById("balance-h").innerText = "Balance: " + balan;
+    document.getElementById("ach-h").innerText = "Earnings: " + achie;
+    document.getElementById("plan-h").innerText = "Plan Name: " + plan;
+    document.getElementById("price-h").innerText = "Plan Price: " + price;
+
+}
+doLoad();
+</script>
+
+<section class="hero is-medium is-info is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">My user information</h1>
+            <p></p>
+            <h2 class="subtitle" id="name-h">Name: N/A</h2>
+            <h2 class="subtitle" id="perm-h">Permissions: N/A</h2>
+            <h2 class="subtitle" id="balance-h">Balance: N/A</h2>
+            <h2 class="subtitle" id="ach-h">Achievement(Earnings): N/A</h2>
+            <h2 class="subtitle" id="plan-h">Plan Name: N/A</h2>
+            <h2 class="subtitle" id="price-h">Plan Price: N/A</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <p>TMobile System is currently in private beta. </p>
+    </div>
+</section>
+

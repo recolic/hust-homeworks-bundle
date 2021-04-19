@@ -1,0 +1,36 @@
+#
+# Required options
+#
+
+# You may use SystemVerilog, Verilog, or VHDL files as sources.
+# sources=(test_main.sv lib/* ./mod?.v)
+sources=(src/*)
+
+# The directory where generated bitstream is put
+bit_dir=./build
+
+# All of your top_modules and its constraint files.
+# top_modules=(
+#     "test_main:constraint/test_main.xdc"
+#     "mod1:constraint/mod1.xdc"
+# )
+top_modules=(
+    "mod1:constraint/mod1.xdc"
+    "mod1b:constraint/mod1b.xdc"
+    "mod2:constraint/mod2.xdc"
+    "mod3:constraint/mod3.xdc"
+)
+
+# Your default top_module. Maybe override by commandline option.
+# top_module=test_main
+top_module=mod1b
+
+#
+# Optional options
+#
+
+# Path to vivado executable. It will override environment variable `vivado_exec`
+# vivado_exec="/path/to/vivado"
+
+# It's recommanded to set thread_num to cores of your CPU.
+thread_num=4

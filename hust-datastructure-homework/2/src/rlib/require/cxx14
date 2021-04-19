@@ -1,0 +1,6 @@
+#ifndef R_CXX14_REQUIRED
+#define R_CXX14_REQUIRED
+
+#include <bits/c++14_warning.h>
+
+#endif

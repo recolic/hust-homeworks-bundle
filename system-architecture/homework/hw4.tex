@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage[a4paper, margin=0.2in]{geometry}
+\usepackage{CJKutf8}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+\title{hw4}
+\author{刘本嵩 U201614531}
+
+\maketitle
+
+% \foreignlanguage{greek}{φΔδ} \begin{CJK}{UTF8}{gbsn}汉\end{CJK}
+
+\section{Q7.9}
+\Large
+\smallskip
+
+(1) 局部不命中率
+
+$$MissRate_{L1} = \frac{110}{3000} = 0.0367$$
+
+$$MissRate_{L2} = \frac{55}{110} = 0.5$$
+
+(2) 全局不命中率
+
+$$GlobalMissRate_{L1} = \frac{110}{3000} = 0.0367$$
+
+$$GlobalMissRate_{L2} = \frac{55}{3000} = 0.0184$$
+
+\section{Q7.10}
+\Large
+\smallskip
+
+平均访问时间 = 命中时间 + MissRate * 额外开销
+
+$$ AccessTime_{1way} = 2 + 1.4\% * 80 = 3.12ns $$
+
+$$ AccessTime_{2way} = 2 * (1+10\%) + 1\% * 80 = 3.0ns $$
+
+CPU时间 = IC * ($CPI_{exe}$ + 平均访存次数 * MissRate * 额外开销) * 时钟周期时间 \\
+
+CPU时间 = IC * ($CPI_{exe}$ * 时钟周期时间 + 平均访存次数 * MissRate * 80ns)
+
+$$ CPUTime_{1way} = IC (2 * 2ns + 1.2 * 1.4\% * 80ns) = 5.344IC $$
+
+$$ CPUTime_{2way} = IC (2.2 * 2ns + 1.2 * 1\% * 80ns) = 5.36IC $$
+
+相对性能比
+
+$$ Rate = \frac{CPUTime_{2way}}{CPUTime_{1way}} = 1.003 $$
+
+结论: 2way组相联的cache平均访问时间短了1.04倍, 而CPU性能差了1.003倍.
+
+\section{Q7.11}
+\Large
+\smallskip
+
+(1)
+
+首先, 同样大小的2way组相联和伪相联有相同的cache miss率. 当cache hit时, 伪相联用时为1way直接相联
+的命中时间加上伪命中开销(也就是伪命中率 * 1Cycle). \\ 显然, 伪命中率就是2way hit并且1way miss的情形
+, 有伪命中率 = $HitRate_{2way} - HitRate_{1way}$. 现在, 可以计算伪相联的平均访存时间了:
+
+$$ AccessTime = HitTime_{1way} + (MissRate_{1way} - MissRate_{2way}) * 1 + MissRate_{2way} * MissCost $$
+
+(2) 直接代入计算.
+
+$$AccessTime_{2K} = 1 + (9.8\%-7.6\%) + (7.6\%*50) = 4.822$$
+
+$$AccessTime_{128K} = 1 + (1\%-0.7\%) + (0.7\%*50) = 1.353$$
+
+因此128KB伪相联更快.
+
+\section{Q7.14}
+\Large
+\smallskip
+
+(1) 如果采用WriteThrough策略, 主存访问情况如下:
+
+ReadHit, 不访问主存.\\
+WriteHit, 需要写回, 访问主存1次.\\
+ReadMiss, 需要读主存, 访问主存2次(整个块共2word, 下文省略).\\
+WriteMiss, 需要写主存, 访问主存3次.\\
+
+将这4种情况的访存次数乘以概率(频率), 就可以得到平均访存次数:
+
+$$nRAMReq = 0*... + 1*(0.95*0.25) + 2*(0.05*0.75) + 3*(0.05*0.25) = 0.350$$
+
+因此已用带宽 35\%.
+
+$$BandwidthUtil = \frac{0.350*10^9}{10^9} = 0.350$$
+
+(2) 如果采用WriteBack策略, 主存访问情况如下:
+
+AnyCacheHit, 不访问主存.\\
+AnyCacheMiss, 需要有一个Block被换出. 这时候, 如果这个Block是Dirty的, 就需要写回主存:\\
+AnyCacheMiss-Dirty: 写回旧Block共2周期, 读取新Block共2周期, 共4周期.\\
+AnyCacheMiss-Clean: 读取新Block, 共2周期.\\
+
+将这3种情况的访存次数乘以概率(频率), 就可以得到平均访存次数:
+
+$$nRAMReq = 0*... + 4*(0.05*0.30) + 2*(0.05*0.70) = 0.130$$
+
+因此已用带宽 13\%.
+
+$$BandwidthUtil = \frac{0.130*10^9}{10^9} = 0.130$$
+
+
+\end{CJK}
+\end{document}
+

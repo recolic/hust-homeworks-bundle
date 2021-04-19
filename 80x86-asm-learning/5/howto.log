@@ -1,0 +1,12 @@
+get code segment, remove end, save.
+get data segment, save.
+run upperToLower.sh
+
+fuck code_area
+
+replace all label in code_area
+compose final asm
+replace all identifier in data_area
+submit
+
+

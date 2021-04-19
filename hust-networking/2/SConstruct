@@ -1,0 +1,17 @@
+ccflags = '-g -fsanitize=address -std=c++17 -Wno-terminate'
+ldflags = '-fsanitize=address -no-pie'
+
+rlibenv=Environment(CPPPATH='./lib/rlib', CPPFLAGS='-std=c++17') 
+rlibenv.Library('r', ['lib/rlib/libr.cc'])
+
+env=Environment(CPPPATH=['./lib', '.', './include', './src'],
+                CPPDEFINES=[],
+                LIBS=['r', 'netsim'],
+                LIBPATH=['./lib'],
+                CPPFLAGS=ccflags,
+                LINKFLAGS=ldflags) 
+env.Program('stopwait', Glob('src/*.cpp'))
+env.Program('gbn', 'src/gbn.cc')
+env.Program('sr', 'src/sr.cc')
+env.Program('tcp', 'src/tcp.cc')
+

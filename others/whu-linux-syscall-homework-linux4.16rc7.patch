@@ -1,0 +1,158 @@
+From 14a5eb2ca024e8e9d43cbf9e9cf4b2c07fcc6eee Mon Sep 17 00:00:00 2001
+From: Recolic Keghart <root@recolic.net>
+Date: Sat, 31 Mar 2018 15:23:57 +0800
+Subject: [PATCH] recolic: done homework
+
+---
+ Makefile                               |  2 +-
+ arch/x86/entry/syscalls/syscall_32.tbl |  1 +
+ arch/x86/entry/syscalls/syscall_64.tbl |  1 +
+ homework/Makefile                      |  1 +
+ homework/ps_debug_info.c               | 29 +++++++++++++++++++++++++++++
+ homework/test.c                        |  5 +++++
+ include/linux/syscalls.h               |  6 ++++++
+ include/uapi/asm-generic/unistd.h      |  8 +++++++-
+ kernel/sys_ni.c                        |  5 +++++
+ 9 files changed, 56 insertions(+), 2 deletions(-)
+ create mode 100644 homework/Makefile
+ create mode 100644 homework/ps_debug_info.c
+ create mode 100644 homework/test.c
+
+diff --git a/Makefile b/Makefile
+index 7ba478a..0314ab4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -982,7 +982,7 @@ endif
+ 
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ homework/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/arch/x86/entry/syscalls/syscall_32.tbl b/arch/x86/entry/syscalls/syscall_32.tbl
+index 2a5e99c..9e65131 100644
+--- a/arch/x86/entry/syscalls/syscall_32.tbl
++++ b/arch/x86/entry/syscalls/syscall_32.tbl
+@@ -391,3 +391,4 @@
+ 382	i386	pkey_free		sys_pkey_free
+ 383	i386	statx			sys_statx
+ 384	i386	arch_prctl		sys_arch_prctl			compat_sys_arch_prctl
++385	i386	ps_debug_info	sys_ps_debug_info
+diff --git a/arch/x86/entry/syscalls/syscall_64.tbl b/arch/x86/entry/syscalls/syscall_64.tbl
+index 5aef183..e626d93 100644
+--- a/arch/x86/entry/syscalls/syscall_64.tbl
++++ b/arch/x86/entry/syscalls/syscall_64.tbl
+@@ -340,6 +340,7 @@
+ 331	common	pkey_free		sys_pkey_free
+ 332	common	statx			sys_statx
+ 
++385 common  ps_debug_info    sys_ps_debug_info
+ #
+ # x32-specific system call numbers start at 512 to avoid cache impact
+ # for native 64-bit operation.
+diff --git a/homework/Makefile b/homework/Makefile
+new file mode 100644
+index 0000000..0c92a90
+--- /dev/null
++++ b/homework/Makefile
+@@ -0,0 +1 @@
++obj-y:=ps_debug_info.o
+diff --git a/homework/ps_debug_info.c b/homework/ps_debug_info.c
+new file mode 100644
+index 0000000..7a461b4
+--- /dev/null
++++ b/homework/ps_debug_info.c
+@@ -0,0 +1,29 @@
++/* Syscall `ps_debug_info` as WHU homework, with syscall number 385,
++ * __NR_syscall number 292. 
++ * Copyright (C) Jiaqi Li <1521385785@qq.com>, Recolic Keghart <root@recolic.net>.
++ **/
++
++#include<linux/kernel.h>
++#include<linux/init.h>
++#include<linux/sched.h>
++#include<linux/syscalls.h>
++
++SYSCALL_DEFINE0(ps_debug_info) {
++    struct task_struct *plist;
++    printk("\n*****ps_debug_info dump*****\n");
++    printk("name|pid|state|priority|RT-priority|static-priority|normal-priority|parent(if any)|parent-pid");
++    for_each_process(plist) {
++        printk( "%s|%ld|%ld|%ld|%ld|%ld|%ld|%s|%ld\n",
++            plist->comm,
++            (long)task_pid_nr(plist),
++            (long)plist->state,
++            (long)plist->prio,
++            (long)plist->rt_priority,
++            (long)plist->static_prio,
++            (long)plist->normal_prio,
++            plist->parent ? plist->parent->comm : "",
++            plist->parent ? (long)task_pid_nr(plist->parent) : -1
++        );
++    }
++  return 0;
++}
+diff --git a/homework/test.c b/homework/test.c
+new file mode 100644
+index 0000000..c2ffc24
+--- /dev/null
++++ b/homework/test.c
+@@ -0,0 +1,5 @@
++#include <sys/syscall.h>
++#include <linux/kernel.h>
++#include <unistd.h>
++
++int main() {return syscall(385);}
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index a78186d..4eb12de 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -941,4 +941,10 @@ asmlinkage long sys_pkey_free(int pkey);
+ asmlinkage long sys_statx(int dfd, const char __user *path, unsigned flags,
+ 			  unsigned mask, struct statx __user *buffer);
+ 
++/* User defined syscall by Jiaqi Li <1521385785@qq.com>, 
++ * Recolic Keghart <root@recolic.net>, as WHU homework.
++ **/
++asmlinkage long sys_ps_debug_info(void);
++/* User defined syscall end */
++
+ #endif
+diff --git a/include/uapi/asm-generic/unistd.h b/include/uapi/asm-generic/unistd.h
+index 8b87de0..b5b3e83 100644
+--- a/include/uapi/asm-generic/unistd.h
++++ b/include/uapi/asm-generic/unistd.h
+@@ -733,8 +733,14 @@ __SYSCALL(__NR_pkey_free,     sys_pkey_free)
+ #define __NR_statx 291
+ __SYSCALL(__NR_statx,     sys_statx)
+ 
++/* syscall as WHU homework. by Jiaqi Li <1521385785@qq.com>, 
++ * Recolic Keghart <root@recolic.net>.
++ **/
++#define __NR_ps_debug_info 292
++__SYSCALL(__NR_ps_debug_info, sys_ps_debug_info)
++
+ #undef __NR_syscalls
+-#define __NR_syscalls 292
++#define __NR_syscalls 293
+ 
+ /*
+  * All syscalls below here should go away really,
+diff --git a/kernel/sys_ni.c b/kernel/sys_ni.c
+index b518976..3ab7507 100644
+--- a/kernel/sys_ni.c
++++ b/kernel/sys_ni.c
+@@ -259,3 +259,8 @@ cond_syscall(sys_membarrier);
+ cond_syscall(sys_pkey_mprotect);
+ cond_syscall(sys_pkey_alloc);
+ cond_syscall(sys_pkey_free);
++
++/* syscall as WHU homework. by Jiaqi Li <1521385785@qq.com>,
++ * Recolic Keghart <root@recolic.net>.
++ **/
++cond_syscall(sys_ps_debug_info);
+-- 
+2.16.3
+

@@ -1,0 +1,43 @@
+<script>
+function doLoad() {
+    let u = httpGetSync('/api/QueryUserInfo?name=' + getCookie("name"));
+    if(!u.startsWith('name=')) {
+        alert("Unable to fetch userinfo: " + u);
+        return;
+    }
+    let name  = u.split("&")[0].split("=")[1];
+    let perms = u.split("&")[1].split("=")[1];
+
+    if(perms.split(',').includes('customer')) {
+        httpGetAsyncCallback('/api/QueryBalanceLog?name=' + name, resp => {
+            let historyTxt = "<h1 class='title'>My Balance History</h1>\n<p></p>"
+            if(!resp.startsWith('events=')) {
+                alert("Unable to fetch balance log: " + resp);
+                return;
+            }
+            resp.substring(7).split('\n').forEach(line => {
+                historyTxt += '<h2 class="subtitle">' + line + '</h2>\n';
+            });
+            if(resp == "events=") {
+                historyTxt += '<h2 class="subtitle">' + 'No history found.' + '</h2>\n';
+            }
+            document.getElementById("idHistorySection").innerHTML = historyTxt;
+        });
+    }
+}
+doLoad();
+</script>
+
+<section class="hero is-medium is-info is-bold">
+    <div class="hero-body">
+        <div class="container">
+<div id="idHistorySection"></div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <p>TMobile System is currently in private beta. </p>
+    </div>
+</section>
+

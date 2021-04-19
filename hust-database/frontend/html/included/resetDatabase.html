@@ -1,0 +1,46 @@
+<script>
+function fuckDatabase() {
+    if(document.getElementById("inputConfirm").value != "YES I WANT TO CUT MY DICK NOW") {
+        alert("You must type the string correctly for confirmation.");
+        return ;
+    }
+    if(confirm("ARE YOU REALLY REALLY REALLY REALLY WILLING TO FUCK THE ENTIRE DB???")) {
+        let newPswd = prompt("Please set new root password:", "")
+        if(newPswd == null) {
+            return;
+        }
+        newPswd = sha256("rsalt" + newPswd + "rsalt")
+        let res = httpGetSync("/api/ResetDatabase?new_root_password=" + newPswd);
+        if(res == "status=ok") {
+            alert("Done.");
+        } else {
+            alert("Failed: " + res);
+        }
+    }
+}
+</script>
+
+<style>
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+</style>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Clear and reset database</h1>
+        <div class="field">
+            <label class="label noselect">Please type `YES I WANT TO CUT MY DICK NOW` to confirm the dangerous action.</label><br />
+            <input class="input" type="text" id="inputConfirm">
+        </div>
+        <br />
+        <button type="submit" class="button is-primary" onclick="fuckDatabase();">FIRE!!!</button>
+    </div>
+</section>
+

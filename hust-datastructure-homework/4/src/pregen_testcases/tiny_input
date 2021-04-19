@@ -1,0 +1,49 @@
+#!./exp4
+# `./exp4 input` not implemented, so you cannot run `./input` directly.
+
+CreateGraph directed_unweighted_graph
+Select 0
+
+PutVex 100`n0
+PutVex 101`n1
+PutVex 102`n2
+PutVex 103`n3
+PutVex 104`n4
+
+InsertVex 105`n5
+InsertVex 106`n6
+InsertVex 107`n7
+InsertVex 108`n8
+InsertVex 109`n9
+
+QuickTraverse
+GetVex `n2
+GetVex `n6
+LocateVex 300
+DeleteVex `n9
+QuickTraverse
+
+InsertArc `n0`n1
+InsertArc `n0`n2
+InsertArc `n0`n3
+InsertArc `n0`n4
+InsertArc `n2`n3
+InsertArc `n2`n5
+InsertArc `n3`n6
+InsertArc `n5`n6
+InsertArc `n6`n7
+InsertArc `n2`n7
+InsertArc `n5`n8
+InsertArc `n7`n0
+InsertArc `n7`n1
+# MultiEdge
+InsertArc `n3`n6
+# SelfRing
+InsertArc `n5`n5
+
+FirstAdjVex `n0
+NextAdjVex `n0 `n1
+DeleteArc `n0`n1
+
+DFSTraverse
+BFSTraverse

@@ -1,0 +1,120 @@
+<style>
+.vertical-center {
+    padding-top: 15px
+}
+</style>
+
+<script src="/res/sha256.min.js"></script>
+
+<script>
+function drawTableHTML() {
+    let allUserInfo = httpGetSync("/api/ListAllUserInfo");
+    if(!allUserInfo.startsWith("name=")) {
+        alert("Error: " + allUserInfo);
+        return;
+    }
+
+    let headArr = ['name', 'permission', 'balance', 'earning', 'plan', 'plan_price'];
+    let res = '<table>';
+    res += '<thead><tr class="table100-head">';
+    let i = 1;
+    
+    headArr.forEach(ele => {
+        res += '<th class="vertical-center column{0}">{1}</th>'.format(String(i), ele);
+        ++i;
+    });
+    res += '</tr></thead>';
+
+    res += '<tbody>';
+    allUserInfo.split('\n').forEach(u => {
+        if(u.split("&").length != 6) {
+            return;
+        }
+        res += '<tr>';
+        let name  = u.split("&")[0].split("=")[1];
+        let perms = u.split("&")[1].split("=")[1];
+        let balan = u.split("&")[2].split("=")[1];
+        let achie = u.split("&")[3].split("=")[1];
+        let plan  = u.split("&")[4].split("=")[1];
+        let price = u.split("&")[5].split("=")[1];
+
+        res += '<td class="vertical-center column1">{0}</td>'.format(name);
+        res += '<td class="vertical-center column2">{0}</td>'.format(perms);
+        res += '<td class="vertical-center column3">{0}</td>'.format(balan);
+        res += '<td class="vertical-center column4">{0}</td>'.format(achie);
+        res += '<td class="vertical-center column5">{0}</td>'.format(plan);
+        res += '<td class="vertical-center column6">{0}</td>'.format(price);
+        res += '</tr>';
+    });
+    res += '</tbody>';
+
+    res += '</table>'
+    return res;
+}
+
+
+function setPlan() {
+    var name = prompt("Please enter user name:", "");
+    if(name == null) { return; }
+    var plan = prompt("Please enter plan name:", "");
+    if(plan != null) {
+        resp = httpGetSync("/api/UpdateUserPlan?name=" + name + "&plan_name=" + plan);
+        if(resp == "status=ok") {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+function addUser() {
+    var name = prompt("Please enter user name:", "");
+    if(name == null) { return; }
+    var password = prompt("User password:", "");
+    if(password == null) { return; }
+    password = sha256("rsalt" + password + "rsalt")
+    var permission = prompt("User permission:", "");
+    if(permission == null) { return; }
+    var email = prompt("User security email:", "");
+    if(email == null) { return; }
+    if(true) {
+        resp = httpGetSync("/api/AddUser?name={0}&password={1}&role={2}&email={3}".format(name, password, permission, email));
+        if(resp.startsWith("uid=")) {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+function removeUser() {
+    var person = prompt("Please enter user name:", "");
+    if(person != null) {
+        resp = httpGetSync("/api/RemoveUser?name=" + person);
+        if(resp == "status=ok") {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+</script>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Users</h1>
+        <div id="divSheet"></div>
+        <br />
+        <h2 class="subtitle">Note: You can only Add or Remove customer account if you are not root.</h2>
+        <button type="submit" class="button is-primary" onclick="setPlan();">Set Customer's Plan</button>
+        <button type="submit" class="button is-primary" onclick="addUser();">Add User</button>
+        <button type="submit" class="button is-primary" onclick="removeUser();">Remove User</button>
+    </div>
+</section>
+
+<script>document.getElementById("divSheet").innerHTML = drawTableHTML(); </script>
+

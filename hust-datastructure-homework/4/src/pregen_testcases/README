@@ -1,0 +1,3 @@
+case_100k is too large for git, so I compressed it.
+
+`xz -d case_100k.xz` before using!

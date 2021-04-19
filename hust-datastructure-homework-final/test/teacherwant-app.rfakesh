@@ -1,0 +1,48 @@
+#!bin/hust-ds
+# teacher-want script
+
+new_person_at 1
+new_person_at 2
+new_person_at 3
+new_person_at 4
+new_person_at 5
+new_person_at 6
+new_person_at 7
+ls
+
+rm_person 7
+ls
+
+add friend 1 2
+add friend 1 3
+add friend 1 4
+add friend 1 6
+add friend 2 4
+add friend 2 6
+add friend 4 6
+add friend 5 6
+rm friend 1 6
+rm friend 3 4
+
+get 1
+
+common friend 1 2
+
+add following 1 2
+add following 3 2
+common following 1 3
+
+indirect friend 1
+
+# Now save/load data!
+save test/naive-1.json
+
+load test/1mtest.json
+
+get 1
+
+get 3
+
+indirect 1
+
+exit

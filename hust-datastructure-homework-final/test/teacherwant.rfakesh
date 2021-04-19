@@ -1,0 +1,67 @@
+#!bin/hust-ds
+# teacher-want script
+
+
+# avl
+# use dump when you want to see the tree, use ls when you want to see the set.
+rm 7
+insert 3
+insert 5
+insert 7
+ls
+
+rm 3
+insert 6
+insert 2
+insert 1
+insert 9
+insert 10
+insert -7
+rm 1
+rm 9
+rm 10
+rm 6
+ls
+
+clear
+
+# set
+insert 7
+insert 23
+insert 4
+insert 24
+insert 6
+insert 6
+insert 1
+insert 66
+insert 4
+insert 8
+insert -3
+insert 11
+ls
+
+CreateAVLSet
+Select 1
+insert 4
+insert 7
+insert 8
+insert 77
+insert -2
+insert 23
+insert 4
+ls
+
+Select 0
+merge 1
+
+sub 1
+
+common 1
+
+contains 1
+contains 0
+
+equal 1
+equal 0
+
+exit

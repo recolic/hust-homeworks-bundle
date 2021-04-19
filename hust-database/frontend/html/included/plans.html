@@ -1,0 +1,106 @@
+<style>
+.vertical-center {
+    padding-top: 15px
+}
+</style>
+
+<script>
+function drawTableHTML() {
+    let allUserInfo = httpGetSync("/api/ListAllPlanInfo");
+    if(!allUserInfo.startsWith("plan_name=")) {
+        if(allUserInfo != "") {
+            alert("Error: " + allUserInfo);
+            return;
+        }
+    }
+
+    let headArr = ['name', 'price'];
+    let res = '<table>';
+    res += '<thead><tr class="table100-head">';
+    let i = 1;
+    
+    headArr.forEach(ele => {
+        res += '<th class="vertical-center column{0}">{1}</th>'.format(String(i), ele);
+        ++i;
+    });
+    res += '</tr></thead>';
+
+    res += '<tbody>';
+    allUserInfo.split('\n').forEach(u => {
+        if(u.split("&").length != 2) {
+            return;
+        }
+        res += '<tr>';
+        let name  = u.split("&")[0].split("=")[1];
+        let price = u.split("&")[1].split("=")[1];
+
+        res += '<td class="vertical-center column1">{0}</td>'.format(name);
+        res += '<td class="vertical-center column2">{0}</td>'.format(price);
+        res += '</tr>';
+    });
+    res += '</tbody>';
+
+    res += '</table>'
+    return res;
+}
+
+
+function setPlan() {
+    var name = prompt("Please enter user name:", "");
+    if(name == null) { return; }
+    var plan = prompt("Please enter plan name:", "");
+    if(plan != null) {
+        resp = httpGetSync("/api/UpdateUserPlan?name=" + name + "&plan_name=" + plan);
+        if(resp == "status=ok") {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+function addPlan() {
+    var name = prompt("Please enter plan name:", "");
+    if(name == null) { return; }
+    var price = prompt("Plan price:", "");
+    if(price == null) { return; }
+    if(true) {
+        resp = httpGetSync("/api/AddPlan?plan_name={0}&price={1}".format(name, price));
+        if(resp.startsWith("plan_id=")) {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+function removePlan() {
+    var person = prompt("Please enter plan name:", "");
+    if(person != null) {
+        resp = httpGetSync("/api/RemovePlan?name=" + person);
+        if(resp == "status=ok") {
+            alert("Done.");
+        }
+        else {
+            alert("Failed. " + resp);
+        }
+        window.location.reload(true); 
+    }
+}
+</script>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Plans</h1>
+        <div id="divSheet"></div>
+        <br />
+        <button type="submit" class="button is-primary" onclick="setPlan();">Set Customer's Plan</button>
+        <button type="submit" class="button is-primary" onclick="addPlan();">Add Plan</button>
+        <button type="submit" class="button is-primary" onclick="removePlan();">Remove Plan</button>
+    </div>
+</section>
+
+<script>document.getElementById("divSheet").innerHTML = drawTableHTML(); </script>
+

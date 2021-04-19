@@ -1,0 +1,8 @@
+*.jou
+*.log
+*.str
+.vscode
+.Xil
+design/log/logi7400
+*.doc#
+*.bit

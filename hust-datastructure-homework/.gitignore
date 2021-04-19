@@ -1,0 +1,8 @@
+*.o
+*.a
+*.out
+**/.vscode/**
+**/.idea/**
+**/CMakeFiles/**
+CMakeCache.txt
+cmake_install.cmake

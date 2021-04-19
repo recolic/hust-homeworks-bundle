@@ -1,0 +1,12 @@
+[submodule "src/lib/rlib"]
+	path = src/lib/rlib
+	url = https://github.com/recolic/rlib.git
+[submodule "src/lib/cpp-readline"]
+	path = src/lib/cpp-readline
+	url = https://github.com/Svalorzen/cpp-readline.git
+[submodule "src/lib/json"]
+	path = src/lib/json
+	url = https://github.com/nlohmann/json.git
+[submodule "src/lib/gc"]
+	path = src/lib/gc
+	url = https://github.com/doublec/gc.git

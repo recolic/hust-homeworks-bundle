@@ -1,0 +1,38 @@
+20
+e main.asm
+wq
+e main.asm
+wq
+e TEST.ASM
+wq
+e TEST.ASM
+wq
+e MAKEFILE
+wq
+e 2.asm
+q
+e MAKEFILE
+q
+e 4.asm
+q
+e 2.asm
+wq
+e 2.asm
+wq
+10
+getchar
+getchar
+getchar
+getchar
+getchar
+getchar
+getchar
+getchar
+getchar
+getchar
+0
+4
+C:\SUBMIT\4\2.asm
+C:\SUBMIT\4\2.asm
+C:\SUBMIT\4\4.asm
+C:\SUBMIT\3\MAKEFILE

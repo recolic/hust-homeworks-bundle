@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="Windows-1252" ?>
+<XML_DIZ_INFO>
+<MASTER_PAD_VERSION_INFO>
+    <MASTER_PAD_VERSION>1.10</MASTER_PAD_VERSION>
+    <MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+</MASTER_PAD_VERSION_INFO>
+<Company_Info>
+        <Company_Name>SRT Enterprises</Company_Name>
+        <Address_1>2S782 Timber Drive</Address_1>
+        <Address_2 />
+        <City_Town>Warrenville</City_Town>
+        <State_Province>IL</State_Province>
+        <Zip_Postal_Code>60555</Zip_Postal_Code>
+        <Country>US</Country>
+        <Company_WebSite_URL>http://www.srtware.com/</Company_WebSite_URL>
+<Contact_Info>
+        <Author_First_Name>Steve</Author_First_Name>
+        <Author_Last_Name>Yates</Author_Last_Name>
+        <Author_Email>srt@srtware.com</Author_Email>
+        <Contact_First_Name>Steve</Contact_First_Name>
+        <Contact_Last_Name>Yates</Contact_Last_Name>
+        <Contact_Email>srt@srtware.com</Contact_Email>
+    </Contact_Info>
+<Support_Info>
+        <Sales_Email>sales@srtware.com</Sales_Email>
+        <Support_Email>support@srtware.com</Support_Email>
+        <General_Email>srt@srtware.com</General_Email>
+        <Sales_Phone />
+        <Support_Phone />
+        <General_Phone />
+        <Fax_Phone />
+    </Support_Info>
+</Company_Info>
+<Program_Info>
+        <Program_Name>EdIt!</Program_Name>
+        <Program_Version>1.2</Program_Version>
+        <Program_Release_Month>03</Program_Release_Month>
+        <Program_Release_Day>23</Program_Release_Day>
+        <Program_Release_Year>2001</Program_Release_Year>
+        <Program_Cost_Dollars>19.95</Program_Cost_Dollars>
+        <Program_Cost_Other />
+        <Program_Type>Shareware</Program_Type>
+        <Program_Release_Status>Minor Update</Program_Release_Status>
+        <Program_Install_Support>Install and Uninstall</Program_Install_Support>
+        <Program_OS_Support>MS-DOS</Program_OS_Support>
+        <Program_Language>English</Program_Language>
+        <Program_Change_Info>Add electronic registration, MS network support, Unix/Mac text formats, 28-line video, minor  bug fixes, and more</Program_Change_Info>
+        <Program_System_Requirements>minimal</Program_System_Requirements>
+        <Program_Specific_Category>Utilities</Program_Specific_Category>
+        <Program_Categories>Editors</Program_Categories>
+<File_Info>
+        <Filename_Versioned>edit12.zip</Filename_Versioned>
+        <Filename_Previous>edit11.zip</Filename_Previous>
+        <Filename_Generic>edit.zip</Filename_Generic>
+        <Filename_Long>EdIt! 1.2.zip</Filename_Long>
+        <File_Size_Bytes>98676</File_Size_Bytes>
+        <File_Size_K>96</File_Size_K>
+        <File_Size_MB>0.10</File_Size_MB>
+    </File_Info>
+<Expire_Info>
+        <Has_Expire_Info>N</Has_Expire_Info>
+        <Expire_Count />
+        <Expire_Based_On>Days</Expire_Based_On>
+        <Expire_Other_Info />
+        <Expire_Month />
+        <Expire_Day />
+        <Expire_Year />
+    </Expire_Info>
+        <Includes_JAVA_VM>N</Includes_JAVA_VM>
+        <Includes_VB_Runtime>N</Includes_VB_Runtime>
+        <Includes_DirectX>N</Includes_DirectX>
+</Program_Info>
+<Program_Descriptions>
+<English>
+        <Keywords>EdIt!, editor, DOS, GUI, mouse, wordwrap, network, wildcard, autoindent, margin, 28 line, 43/50 line, unix, macintosh</Keywords>
+        <Char_Desc_45>Neat DOS editor for small files</Char_Desc_45>
+        <Char_Desc_80>DOS text editor with support for networks, wildcards, wordwrap, and more</Char_Desc_80>
+        <Char_Desc_250>DOS text editor with support for networks, wildcards, wordwrap, multiple video modes, Unix/Mac text formats, and more! Ideal for editing groups of batch files.</Char_Desc_250>
+        <Char_Desc_450>EdIt! v1.2 -- A fast, windowed, mouseable replacement for DOS&apos;s EDIT command.  Ideal for BAT and text files under 64k, especially on networks: no more walking around to update users&apos; files!  Program size is less than 81k. Features: open multiple files (with wildcards!) and preset groups of files, wordwrap, network support, desktop save &amp; restore, mono/28/43/50 video, variable right margin &amp; tabs and more.  By SRT Enterprises, $19.95.</Char_Desc_450>
+        <Char_Desc_2000>EdIt! v1.2 -- A fast, windowed, mouseable replacement for DOS&apos;s EDIT command.  Ideal for BAT and text files under 64k, especially on networks: no more walking around to update users&apos; files!  Program size is less than 81k. Features: open multiple files (with wildcards!) and preset groups of files, wordwrap, network support, desktop save &amp; restore, mono/28/43/50 video, variable right margin &amp; tabs and more.  By SRT Enterprises, $19.95.</Char_Desc_2000>
+</English>
+</Program_Descriptions>
+<Web_Info>
+<Application_URLs>
+        <Application_Info_URL>http://www.srtware.com/EdIt/</Application_Info_URL>
+        <Application_Order_URL>http://www.srtware.com/EdIt/</Application_Order_URL>
+        <Application_Screenshot_URL />
+        <Application_Icon_URL />
+        <Application_XML_File_URL>http://www.srtware.com/padfiles/edit12.xml</Application_XML_File_URL>
+    </Application_URLs>
+<Download_URLs>
+        <Primary_Download_URL>http://www.srtware.com/files/edit12.zip</Primary_Download_URL>
+        <Secondary_Download_URL>ftp://ftp.srtware.com/files/edit12.zip</Secondary_Download_URL>
+        <Additional_Download_URL_1 />
+        <Additional_Download_URL_2 />
+    </Download_URLs>
+</Web_Info>
+<Permissions>
+        <Distribution_Permissions>You are hereby granted a limited license to freely
+distribute the evaluation version of EdIt!, subject to the
+following terms and conditions.  Any other use,
+distribution or representation of EdIt! is expressly
+forbidden without the express written consent of the author.
+
+  (1) EdIt!, its documentation, and accompanying files may
+      not be altered under any circumstances, and must be
+      distributed as a complete unit.  Please contact
+      the author for information on obtaining a complete
+      copy of the latest version for evaluation and
+      distribution if yours is incomplete or has been
+      modified.
+
+  (2) Under no circumstances must the purchaser or receiver
+      of the software be given the impression that he/she
+      is buying or receiving a license to use the software
+      itself, but merely an evaluation copy.
+
+  (3) Any disputes concerning this software shall be
+      resolved subject to the applicable laws of the United
+      States of America and the State of Illinois.
+
+  (4) Failure to abide by these provisions constitutes
+      violation of U.S. federal copyright laws, and will be
+      prosecuted to the maximum extent possible.</Distribution_Permissions>
+        <EULA>Read the following terms and conditions carefully.
+Use of this product constitutes your acceptance of these
+terms and conditions and your agreement to follow them.
+
+     SRT ENTERPRISES (AUTHOR) GRANTS YOU, THE END USER, A
+NONEXCLUSIVE PERSONAL LICENSE TO USE THIS SOFTWARE FOR A
+PERIOD UP TO 30 DAYS IN ORDER TO EVALUATE ITS SUITABILITY
+TO YOUR NEEDS.  AFTER THE EVALUATION PERIOD YOU MUST EITHER
+REGISTER WITH THE AUTHOR OR CEASE USING THE SOFTWARE.  YOU
+MAY USE THE SOFTWARE ON A SINGLE PERSONAL COMPUTER SYSTEM
+AND MAKE AS MANY COPIES AS NEEDED FOR BACKUP AND ARCHIVAL.
+YOU MAY ALSO DISTRIBUTE THE SOFTWARE, UNMODIFIED AND IN ITS
+ENTIRETY, TO OTHERS WHO ARE INTERESTED IN EVALUATING THE
+SOFTWARE AS PER THE FOLLOWING DISTRIBUTION LICENSE.  YOU
+MAY NOT MODIFY, ALTER, TRANSLATE, DISASSEMBLE, DECOMPILE,
+OR LEASE THE SOFTWARE OR THIS MANUAL.  THIS LICENSE IS
+EFFECTIVE UNTIL TERMINATED.  YOU MAY TERMINATE IT AT ANY
+TIME BY DESTROYING THE SOFTWARE.  IT WILL ALSO TERMINATE IF
+YOU FAIL TO COMPLY WITH ANY TERM OR CONDITION OF THIS
+AGREEMENT.  YOU AGREE UPON SUCH TERMINATION TO DESTROY THE
+SOFTWARE.  THIS AGREEMENT SHALL BE GOVERNED BY THE LAWS OF
+THE STATE OF ILLINOIS.
+
+     EdIt! is a &quot;Shareware&quot; program (see note below) and is
+provided at no charge to the user for evaluation.  Feel
+free to share this evaluation copy with your friends, but
+you may not give it away altered or as part of another
+program.  The essence of &quot;user-supported&quot; software is to
+provide personal computer users with quality software
+without high prices, and yet provide incentive for
+programmers to continue to develop new products.
+
+     If you find this program useful and find that you are
+using EdIt! and continue to use EdIt! after a 30-day trial
+period, you must register with the author.</EULA>
+</Permissions>
+<ASP>
+    <ASP_FORM>Y</ASP_FORM>
+    <ASP_Member>N</ASP_Member>
+    <ASP_Member_Number />
+</ASP>
+<Simtel.Net>
+    <Simtel.net_FORM>Y</Simtel.net_FORM>
+    <Simtel.Net_DOS_Category>Utilities/Drivers/System Files - editor Text editors</Simtel.Net_DOS_Category>
+    <Simtel.Net_Win31_Category>Select - Win3 Platform</Simtel.Net_Win31_Category>
+    <Simtel.Net_WinXX_Category>Select - Win95/98/2000 Platform</Simtel.Net_WinXX_Category>
+    <Simtel.Net_Category>Utilities - Text Editors</Simtel.Net_Category>
+    <Simtel.Net_FTPCDROM_DISTRIBUTE_ON_CDROM>Y</Simtel.Net_FTPCDROM_DISTRIBUTE_ON_CDROM>
+</Simtel.Net>
+</XML_DIZ_INFO>

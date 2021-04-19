@@ -1,0 +1,7 @@
+<configuration>
+<property>
+ <name>fs.default.name</name>
+ <value>hdfs://login.hpc-lan.recolic.org:54310/</value>
+ <description>.</description>
+</property>
+</configuration>
