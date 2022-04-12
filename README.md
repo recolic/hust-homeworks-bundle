@@ -9,9 +9,28 @@
 实习报告，毕业设计报告，这种每个学生都不同的作业，不会被包含在这个仓库中。
 此仓库仅包含易于抄袭的作业。
 
-## misunderstandings
+## TOC
 
-计算机系统结构 和 计算机组成原理 的英文翻译撞车了，自己好好找找。
+这是不完整目录。
+
+|Class Name|Subdirectory|
+|---|---|
+|C课设|/hust-c-programming-homework|
+|数据结构实验|/hust-datastructure-homework|
+|数据结构课设|/hust-datastructure-homework-final|
+|数电实验|/hust-digital-electronics-exp|
+|verilog实验|/hust-verilog-exp|
+|操作系统实验|/hust-os-exp|
+|操作系统课设|/hust-os-design|
+|数据库|/hust-database|
+|网络|/hust-networking|
+|计算机系统结构|/system-architecture|
+|计算机组成原理课设|/hust-cpu-design|
+|大数据实验|/hust-bigdata-platformprog|
+|面向平台的编程实验|/hust-bigdata-platformprog|
+|计算机图形学实验|/opengl|
+|综合能力培养-NEMU|/hust-x86-simulator|
+|其他杂物|/others|
 
 ## Accessing
 
