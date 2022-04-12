@@ -11,7 +11,7 @@
 
 ## TOC
 
-这是不完整目录。
+这是**不完整**目录。找不到的话去翻翻其他子目录。
 
 |Class Name|Subdirectory|
 |---|---|
@@ -24,7 +24,9 @@
 |操作系统课设|/hust-os-design|
 |数据库|/hust-database|
 |网络|/hust-networking|
+|算法|/algorithm|
 |计算机系统结构|/system-architecture|
+|计算机组成原理实验|/hust-computer-archi-exp|
 |计算机组成原理课设|/hust-cpu-design|
 |大数据实验|/hust-bigdata-platformprog|
 |面向平台的编程实验|/hust-bigdata-platformprog|
