@@ -1,0 +1,267 @@
+From ccf958138ef1c721570ecc6b057fe848ea0f2be2 Mon Sep 17 00:00:00 2001
+From: Recolic <git@me.recolic.net>
+Date: Wed, 1 Jan 2025 21:20:51 -0800
+Subject: [PATCH] squash: tested final version basing on linux 5.5
+
+---
+ Makefile                               |   2 +-
+ arch/x86/entry/syscalls/syscall_32.tbl |   1 +
+ arch/x86/entry/syscalls/syscall_64.tbl |   1 +
+ homework/Makefile                      |   8 ++
+ homework/hust_cp.c                     | 102 +++++++++++++++++++++++++
+ homework/test.cc                       |  24 ++++++
+ include/linux/syscalls.h               |   6 ++
+ include/uapi/asm-generic/unistd.h      |   4 +-
+ install.sh                             |   5 ++
+ kernel/sys_ni.c                        |   3 +
+ 10 files changed, 154 insertions(+), 2 deletions(-)
+ create mode 100644 homework/Makefile
+ create mode 100644 homework/hust_cp.c
+ create mode 100644 homework/test.cc
+ create mode 100644 install.sh
+
+diff --git a/Makefile b/Makefile
+index 1f7dc3a2e..c1f5c4785 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1014,7 +1014,7 @@ export MODORDER := $(extmod-prefix)modules.order
+ export MODULES_NSDEPS := $(extmod-prefix)modules.nsdeps
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ homework/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/arch/x86/entry/syscalls/syscall_32.tbl b/arch/x86/entry/syscalls/syscall_32.tbl
+index 15908eb9b..eed271a78 100644
+--- a/arch/x86/entry/syscalls/syscall_32.tbl
++++ b/arch/x86/entry/syscalls/syscall_32.tbl
+@@ -440,3 +440,4 @@
+ 433	i386	fspick			sys_fspick			__ia32_sys_fspick
+ 434	i386	pidfd_open		sys_pidfd_open			__ia32_sys_pidfd_open
+ 435	i386	clone3			sys_clone3			__ia32_sys_clone3
++436 i386    hust_cp         sys_hust_cp         __ia32_sys_hust_cp
+diff --git a/arch/x86/entry/syscalls/syscall_64.tbl b/arch/x86/entry/syscalls/syscall_64.tbl
+index c29976eca..1029532f7 100644
+--- a/arch/x86/entry/syscalls/syscall_64.tbl
++++ b/arch/x86/entry/syscalls/syscall_64.tbl
+@@ -357,6 +357,7 @@
+ 433	common	fspick			__x64_sys_fspick
+ 434	common	pidfd_open		__x64_sys_pidfd_open
+ 435	common	clone3			__x64_sys_clone3/ptregs
++436 common  hust_cp         __x64_sys_hust_cp
+ 
+ #
+ # x32-specific system call numbers start at 512 to avoid cache impact
+diff --git a/homework/Makefile b/homework/Makefile
+new file mode 100644
+index 000000000..ab571e4ac
+--- /dev/null
++++ b/homework/Makefile
+@@ -0,0 +1,8 @@
++obj-y:=hust_cp.o
++
++recolic_test:
++	g++ test.cc -o test
++
++clean:
++	rm -f test
++
+diff --git a/homework/hust_cp.c b/homework/hust_cp.c
+new file mode 100644
+index 000000000..b9b230bb6
+--- /dev/null
++++ b/homework/hust_cp.c
+@@ -0,0 +1,102 @@
++/* Syscall `hust_cp` as HUST homework, with syscall number 436,
++ * Copyright (C) Recolic Keghart <root@recolic.net>, 2020.
++ **/
++
++#include <linux/kernel.h>
++#include <linux/init.h>
++#include <linux/sched.h>
++#include <linux/syscalls.h>
++
++#define auto __auto_type
++
++static ssize_t kernel_read_by_fd(int fd, void *buf, size_t count, loff_t *pos) {
++    struct fd f = fdget(fd);
++    ssize_t ret = -EBADF;
++
++    if (!f.file)
++        goto out; 
++
++    ret = kernel_read(f.file, buf, count, pos); 
++out:
++    fdput(f);
++    return ret; 
++}
++
++static ssize_t kernel_write_by_fd(int fd, const void *buf, size_t count, loff_t *pos) {
++    struct fd f = fdget(fd);
++    ssize_t ret = -EBADF;
++
++    if (!f.file)
++        goto out; 
++
++    ret = kernel_write(f.file, buf, count, pos); 
++out:
++    fdput(f);
++    return ret; 
++}
++
++#define HUST_CP_BUF_SIZE 4096
++SYSCALL_DEFINE3(hust_cp, const char __user *, srcfname, const char __user *, dstfname, umode_t, dst_mode) {
++    int ret;
++
++    long src_fd = ksys_open(srcfname, O_RDONLY, NULL);
++    long dst_fd = ksys_open(dstfname, O_CREAT | O_WRONLY | O_TRUNC, dst_mode);
++    if(src_fd < 0 || dst_fd < 0) {
++        ret = src_fd < 0 ? src_fd : dst_fd;
++        goto out_without_close;
++    }
++
++    void *buf = vmalloc(HUST_CP_BUF_SIZE); // will be vmalloc-ed
++    if(!buf) {
++        ret = -ENOMEM;
++        goto out;
++    }
++
++    ssize_t actual_size;
++    loff_t src_pos = 0, dst_pos = 0;
++    while(true) {
++        actual_size = kernel_read_by_fd(src_fd, buf, HUST_CP_BUF_SIZE, &src_pos);
++        if(actual_size < 0) {
++            ret = actual_size;
++            goto out;
++        }
++        if(actual_size == 0) {
++            break;
++        }
++
++        actual_size = kernel_write_by_fd(dst_fd, buf, actual_size, &dst_pos);
++        if(actual_size < 0) {
++            ret = actual_size;
++            goto out;
++        }
++    }
++
++out:
++    ksys_close(src_fd);
++    ksys_close(dst_fd);
++out_without_close:
++    if(buf)
++        vfree(buf);
++    return ret;
++
++    /*
++    struct task_struct *plist;
++    printk("\n*****ps_debug_info dump*****\n");
++    printk("name|pid|state|priority|RT-priority|static-priority|normal-priority|parent(if any)|parent-pid");
++    for_each_process(plist) {
++        printk( "%s|%ld|%ld|%ld|%ld|%ld|%ld|%s|%ld\n",
++            plist->comm,
++            (long)task_pid_nr(plist),
++            (long)plist->state,
++            (long)plist->prio,
++            (long)plist->rt_priority,
++            (long)plist->static_prio,
++            (long)plist->normal_prio,
++            plist->parent ? plist->parent->comm : "",
++            plist->parent ? (long)task_pid_nr(plist->parent) : -1
++        );
++    }
++  return 0;
++  */
++}
++
+diff --git a/homework/test.cc b/homework/test.cc
+new file mode 100644
+index 000000000..afda0050d
+--- /dev/null
++++ b/homework/test.cc
+@@ -0,0 +1,24 @@
++#include <sys/syscall.h>
++//#include <linux/kernel.h>
++#include <unistd.h>
++
++#include <rlib/opt.hpp>
++#include <rlib/stdio.hpp>
++#include <stdexcept>
++
++#define __NR_hust_cp 436
++
++int main(int argc, char **argv) {
++    rlib::opt_parser args(argc, argv);
++    if(args.data().size() != 2)
++        throw std::runtime_error("Usage: ./this $srcFname $dstFname");
++
++    const char *src = args.data()[0].c_str();
++    const char *dst = args.data()[1].c_str();
++
++    int ret = syscall(__NR_hust_cp, src, dst, 0644);
++    if(ret != 0)
++    	rlib::printfln("Copy failed ({}), {}.", ret, strerror(errno));
++    return ret;
++}
++
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 5262b7a76..3863fa55a 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -1001,6 +1001,12 @@ asmlinkage long sys_pidfd_send_signal(int pidfd, int sig,
+ 				       siginfo_t __user *info,
+ 				       unsigned int flags);
+ 
++/* User defined syscall by Recolic Keghart <root@recolic.net>,
++ * as a naive homework.
++ **/
++asmlinkage long sys_hust_cp(const char __user *srcfname, const char __user *dstfname, umode_t dst_mode);
++/* User defined syscall end */
++
+ /*
+  * Architecture-specific system calls
+  */
+diff --git a/include/uapi/asm-generic/unistd.h b/include/uapi/asm-generic/unistd.h
+index 1fc8faa6e..e7147a89f 100644
+--- a/include/uapi/asm-generic/unistd.h
++++ b/include/uapi/asm-generic/unistd.h
+@@ -850,9 +850,11 @@ __SYSCALL(__NR_pidfd_open, sys_pidfd_open)
+ #define __NR_clone3 435
+ __SYSCALL(__NR_clone3, sys_clone3)
+ #endif
++#define __NR_hust_cp 436
++__SYSCALL(__NR_hust_cp, sys_hust_cp)
+ 
+ #undef __NR_syscalls
+-#define __NR_syscalls 436
++#define __NR_syscalls 437
+ 
+ /*
+  * 32 bit systems traditionally used different
+diff --git a/install.sh b/install.sh
+new file mode 100644
+index 000000000..493b64161
+--- /dev/null
++++ b/install.sh
+@@ -0,0 +1,5 @@
++
++cp arch/x86/boot/bzImage /boot/vmlinuz-5.5.5 &&
++mkinitcpio -k 5.5.5-gbf026168b -g /boot/initramfs-5.5.5.img &&
++grub-mkconfig -o /boot/grub/grub.cfg
++
+diff --git a/kernel/sys_ni.c b/kernel/sys_ni.c
+index 3b69a560a..2e38fe870 100644
+--- a/kernel/sys_ni.c
++++ b/kernel/sys_ni.c
+@@ -472,3 +472,6 @@ COND_SYSCALL(setuid16);
+ 
+ /* restartable sequence */
+ COND_SYSCALL(rseq);
++
++/* HUST homework by recolic */
++COND_SYSCALL(hust_cp);
+-- 
+2.47.1
+

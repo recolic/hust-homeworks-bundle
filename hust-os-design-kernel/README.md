@@ -1,7 +1,7 @@
-# hust-os-design-kernel
+# hust-os-design-kernel.git
 
-This project requires a dedicated git repo, please refer to <https://git.recolic.net/recolic-hust/hust-os-design-kernel>
+> Sperate project for hust-os-design linux kernel. This project is LARGE and temporary. **This project will be deleted, and archived as a patch, after finishing my lab.**
 
-中国用户请翻墙。
+Usage:
 
-
+Download linux 5.5 release source code, and git apply the patch.
