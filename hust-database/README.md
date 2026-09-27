@@ -28,16 +28,16 @@ docker run -d --restart=always --name hustdb -p 8088:8088 -v /srv/hustdb:/var/li
 
 ## Screenshots
 
-![](https://recolic.net/res/snap-0528-003628.png)
+![](res/snap-0528-003628.png)
 
-![](https://recolic.net/res/snap-0528-003914.png)
+![](res/snap-0528-003914.png)
 
-![](https://recolic.net/res/snap-0528-003927.png)
+![](res/snap-0528-003927.png)
 
-![](https://recolic.net/res/snap-0528-003935.png)
+![](res/snap-0528-003935.png)
 
-![](https://recolic.net/res/snap-0528-004050.png)
+![](res/snap-0528-004050.png)
 
-![](https://recolic.net/res/snap-0528-004111.png)
+![](res/snap-0528-004111.png)
 
-![](https://recolic.net/res/snap-0528-004126.png)
+![](res/snap-0528-004126.png)
